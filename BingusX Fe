@@ -1,0 +1,275 @@
+-- Create the main GUI
+
+local gui = Instance.new("ScreenGui")
+
+gui.Name = "BingusX"
+
+gui.Parent = game.Players.LocalPlayer.PlayerGui
+
+-- Create a RemoteEvent to execute the selected script
+
+local executeScriptEvent = Instance.new("RemoteEvent")
+
+executeScriptEvent.Name = "ExecuteScriptEvent"
+
+executeScriptEvent.Parent = game.ReplicatedStorage
+
+-- Function to create a button with a description
+
+local function createButton(name, description, script)
+
+    local button = Instance.new("TextButton")
+
+    button.Name = name
+
+    button.Text = name
+
+    button.Size = UDim2.new(0, 200, 0, 50)
+
+    button.Position = UDim2.new(0, 50, 0, 50 * (#gui:GetChildren() + 1))
+
+    button.Parent = gui
+
+    
+
+    local textLabel = Instance.new("TextLabel")
+
+    textLabel.Name = "Description"
+
+    textLabel.Text = description
+
+    textLabel.Size = UDim2.new(1, -10, 1, -10)
+
+    textLabel.Position = UDim2.new(0, 5, 0, 5)
+
+    textLabel.BackgroundTransparency = 1
+
+    textLabel.TextColor3 = Color3.new(1, 1, 1)
+
+    textLabel.TextSize = 16
+
+    textLabel.TextWrapped = true
+
+    textLabel.Parent = button
+
+    
+
+    button.MouseButton1Click:Connect(function()
+
+        -- Fire the RemoteEvent to execute the selected script
+
+        executeScriptEvent:FireServer(script)
+
+    end)
+
+end
+
+-- Script 1: [Music]
+
+local script1Name = "Music"
+
+local script1Description = "[no desc]"
+
+local script1 = [[
+
+-- Replace this with the actual asset ID or URL of the song
+
+local soundId = "rbxassetid://8176434247"
+
+-- Adjust the volume and pitch as desired
+
+local volume = 1
+
+local pitch = 1
+
+-- Play the sound for all players
+
+game:GetService("Players").ChildAdded:Connect(function(player)
+
+    local sound = Instance.new("Sound")
+
+    sound.Name = "Sound"
+
+    sound.SoundId = soundId
+
+    sound.Volume = volume
+
+    sound.Pitch = pitch
+
+    sound.Looped = true
+
+    sound.Archivable = false
+
+    sound.Parent = player.Character:WaitForChild("Head")
+
+    sound:Play()
+
+end)
+
+]]
+
+createButton(script1Name, script1Description, script1)
+
+-- Script 2: [Jumpscare]
+
+local script2Name = "Jumpscare"
+
+local script2Description = "[scary]"
+
+local script2 = [[
+
+-- Replace this with the actual asset ID or URL of the jumpscare sound
+
+local jumpscareSoundId = "rbxassetid://7006487793"
+
+-- Replace this with the actual asset ID or URL of the jumpscare image
+
+local jumpscareImageId = "rbxassetid://13727254537"
+
+-- Adjust the volume and pitch as desired
+
+local volume = 1
+
+local pitch = 0.75
+
+-- Play the jumpscare for all players
+
+game:GetService("Players").ChildAdded:Connect(function(player)
+
+    local jumpscareSound = Instance.new("Sound")
+
+    jumpscareSound.Name = "JumpscareSound"
+
+    jumpscareSound.SoundId = jumpscareSoundId
+
+    jumpscareSound.Volume = volume
+
+    jumpscareSound.Pitch = pitch
+
+    jumpscareSound.Parent = player.Character:WaitForChild("Head")
+
+    jumpscareSound:Play()
+
+    
+
+    local jumpscareGUI = Instance.new("ScreenGui")
+
+    jumpscareGUI.Name = "Jumpscare"
+
+    
+
+    local image = Instance.new("ImageLabel", jumpscareGUI)
+
+    image.Name = "JumpscareImage"
+
+    image.BackgroundColor3 = Color3.new(0, 0, 0)
+
+    image.BorderColor3 = Color3.new(255, 255, 255)
+
+    image.BorderSizePixel = 0
+
+    image.Size = UDim2.new(1, 0, 1, 0)
+
+    image.Image = "http://www.roblox.com/asset/?id=13727254556" .. jumpscareImageId
+
+    
+
+    image.Active = true
+
+    jumpscareGUI.Parent = player.PlayerGui
+
+    
+
+    wait(9)
+
+    
+
+    jumpscareSound:Destroy()
+
+    jumpscareGUI:Destroy()
+
+    end)
+
+    ]]
+
+    
+
+    createButton(script2Name, script2Description, script2)
+
+    
+
+    -- Script 3: [Decal And Skybox]
+
+    local script3Name = "Decal And Skybox"
+
+    local script3Description = "[oh no]"
+
+    local script3 = [[
+
+    -- Replace this with the actual asset ID or URL of the decal
+
+    local decalId = "rbxassetid://13727254556"
+
+    -- Replace this with the actual asset ID or URL of the skybox
+
+    local skyboxId = "rbxassetid://13727254556"
+
+    
+
+    -- Apply the decal and skybox for all players
+
+    game:GetService("Players").ChildAdded:Connect(function(player)
+
+    for _, v in pairs(player.Character:GetDescendants()) do
+
+        if v:IsA("BasePart") then
+
+            local decal = Instance.new("Decal")
+
+            decal.Texture = "http://www.roblox.com/asset/?id=13727254556" .. decalId
+
+            decal.Parent = v
+
+            decal.Face = Enum.NormalId.Front
+
+        end
+
+    end
+
+    
+
+    local sky = Instance.new("Sky")
+
+    sky.SkyboxBk = "http://www.roblox.com/asset/?id=13727254556" .. skyboxId
+
+    sky.SkyboxDn = "http://www.roblox.com/asset/?id=13727254556" .. skyboxId
+
+    sky.SkyboxFt = "http://www.roblox.com/asset/?id=13727254556" .. skyboxId
+
+    sky.SkyboxLf = "http://www.roblox.com/asset/?id=13727254556" .. skyboxId
+
+    sky.SkyboxRt = "http://www.roblox.com/asset/?id=13727254556" .. skyboxId
+
+    sky.SkyboxUp = "http://www.roblox.com/asset/?id=13727254556" .. skyboxId
+
+    sky.Parent = player.Character:WaitForChild("Head")
+
+    end)
+
+    ]]
+
+    
+
+    createButton(script3Name, script3Description, script3)
+
+    
+
+    -- Add more scripts as needed...
+
+    
+
+    -- Display the GUI
+
+    gui.Parent = game.Players.LocalPlayer.PlayerGui
+
+    
